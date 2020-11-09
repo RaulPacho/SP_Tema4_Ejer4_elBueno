@@ -9,13 +9,14 @@ namespace SP_Tema4_Ejer4
     {
         private static object l = new object();
         public static bool goal = false;
-        private int distance = 10;
+        private int distance = 50;
         public string HorseName { get; set; }
         public int horseId;
         private int posTop;
         private string space = "";
         private string face = "";
         Random rand = new Random();
+        private static int photoFinish = 0;
         public static int IdWinner { get; set; }
 
         public /*object*/ void Correr()
@@ -23,14 +24,16 @@ namespace SP_Tema4_Ejer4
             string aux = "";
             while (!goal)
             {
-                if (!goal)
+                lock (l)//1 -5 2- nada 3- solo 1
                 {
-                    distance--;
+
+                    if (!goal)
+                {
+                    
+                    distance = distance - rand.Next(1,3);
                     aux += space.Substring(0, space.Length - distance);
                     space = space.Substring(0, distance);
-                    lock (l)
-                    {
-
+                    
                         Console.SetCursorPosition(1, posTop);
                         if (distance == 1)
                         {
@@ -38,9 +41,18 @@ namespace SP_Tema4_Ejer4
                             Console.SetCursorPosition(51, posTop);
                             Console.WriteLine("{0}{1}", " |", face);
                             Console.SetCursorPosition(1, 27);
-                            Console.WriteLine("Enter key to continue...");
                             goal = true;
-                            IdWinner = horseId;
+                            photoFinish++;
+                            
+                            if(photoFinish <= 1)
+                            {
+                                IdWinner = horseId;
+                            }
+                            if(photoFinish > 1)
+                            {
+                                Console.WriteLine("HUBO FOTOFINISH! \nLos jueces estan decidiendo...");
+                            }
+                            Console.WriteLine("Enter key to continue...");
                         }
                         else
                         {
@@ -53,8 +65,8 @@ namespace SP_Tema4_Ejer4
                         Console.WriteLine("{0}{1}", " |", "h");
                         goal = true;
                     }*/
-                    Thread.Sleep(100 * rand.Next(2, 6));
                 }
+                    Thread.Sleep(100 * rand.Next(2, 6));
 
             }
             //return null;
@@ -71,6 +83,7 @@ namespace SP_Tema4_Ejer4
             {
                 space += " ";
             }
+            photoFinish = 0;
         }
 
 
