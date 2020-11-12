@@ -12,7 +12,7 @@ namespace SP_Tema4_Ejer4
             string repeat = "1";
             int bet = -1;
 
-
+            
 
             while (repeat == "1")
             {
@@ -25,6 +25,7 @@ namespace SP_Tema4_Ejer4
                 horses.Add(new Horse(3, "Ramon", 7, "4"));
                 horses.Add(new Horse(4, "HorseCarlos", 9, "5"));
                 fuckedUp = true;
+                
                 while (fuckedUp)
                 {
                     fuckedUp = false;
@@ -34,7 +35,7 @@ namespace SP_Tema4_Ejer4
                     Console.WriteLine("3. MariaHorse");
                     Console.WriteLine("4. Ramon");
                     Console.WriteLine("5. HorseCarlos");
-
+                   
                     if (!int.TryParse(Console.ReadLine(), out bet))
                     {
 
@@ -51,22 +52,24 @@ namespace SP_Tema4_Ejer4
                         }
                     }
                 }
+                
                 Console.Clear();
-                for (int i = 0; i < horses.Count; i++)
-                {
-                    threads.Add(new Thread(horses[i].Correr));
-                    threads[i].Start();
-                }
+                    for (int i = 0; i < horses.Count; i++)
+                    {
+                        threads.Add(new Thread(horses[i].Correr));
+                        threads[i].Start();
+                     }
+                    threads[0].Join();
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("And the winner is: " + horses[Horse.IdWinner].HorseName);
+                    string str = bet == Horse.IdWinner ? "And yout win, feeling right?" : "Hah! you lost";
+                    Console.WriteLine(str);
 
-                Console.ReadLine();
-                Console.Clear();
-                Console.WriteLine("And the winner is: " + horses[Horse.IdWinner].HorseName);
-                string str = bet == Horse.IdWinner ? "And yout win, feeling right?" : "Hah! you lost";
-                Console.WriteLine(str);
 
-
-                Console.WriteLine("Introduce 1 to repeat Enter to exit");
-                repeat = Console.ReadLine();
+                    Console.WriteLine("Introduce 1 to repeat Enter to exit");
+                    repeat = Console.ReadLine();
+                
 
             }
         }
